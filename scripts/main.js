@@ -20,7 +20,7 @@ for (let i = 0; i < products.length; i++) { // No.2
   // No.4
 
   // No.5
-  let itemText = name+"-$"+price;
+  let itemText = name+"--$"+price;
 
   const listItem = document.createElement('li');
   listItem.textContent = itemText;
