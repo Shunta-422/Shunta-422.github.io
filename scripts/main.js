@@ -1,30 +1,37 @@
 const list = document.querySelector('.output ul');
-const totalBox = document.querySelector('.output p');
-let total = 0;
+const searchInput = document.querySelector('.output input');
+const searchBtn = document.querySelector('.output button');
+
 list.innerHTML = '';
-totalBox.textContent = '';
-// No.1
-let products=[
-                'パンツ:6.99',
-                '靴下:5.99',
-                'T シャツ:14.99',
-                'ズボン:31.99',
-                '靴:23.99'];
 
-for (let i = 0; i < products.length; i++) { // No.2
-  // No.3
-    let subarray = products[i].split(":");
-    let name = subarray[0];
-    let price = Number(subarray[1]);
-    total += price;
-  // No.4
+let myHistory = [];
 
-  // No.5
-  let itemText = name+"--$"+price;
+searchBtn.onclick = function() {
+  // 検索ボックスが空ではない場合のみ検索語を受け付けるようにします
+  if (searchInput.value !== '') {
+    // No.1
+    myHistory.unshift(searchInput.value);
+    // 表示中の一覧を空にして、同じ項目が表示されないようにして、
+    // 結果は検索語が入力される度に毎回作り直されます。
+    list.innerHTML = '';
 
-  const listItem = document.createElement('li');
-  listItem.textContent = itemText;
-  list.appendChild(listItem);
+    // 配列をループして、リスト内の全ての検索語を表示します
+    for (let i = 0; i < myHistory.length; i++) {
+      itemText = myHistory[i];
+      const listItem = document.createElement('li');
+      listItem.textContent = itemText;
+      list.appendChild(listItem);
+    }
+
+    // 配列の長さが 5以上になったら一番古い検索語を削除します
+    if (myHistory.length >= 5) {
+      // No.2
+      myHistory.pop();
+    }
+
+    // 次の検索語を受け付けるため、検索ボックスを空にしてフォーカスします
+    searchInput.value = '';
+    searchInput.focus();
+  }
 }
 
-totalBox.textContent = '合計: $' + total.toFixed(2);
